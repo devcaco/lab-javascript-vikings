@@ -137,37 +137,38 @@ class War {
 
     //SAXON'S ATTACK
     setTimeout(() => {
-      viking = this.randomVikingSoldier();
-      saxon = this.randomSaxonSoldier();
-      this.highlightSoldierInDOM(saxon.id, game.timeout);
-      this.addLogMessage('saxons', `Saxon soldier attacked ${viking.name}`);
-
-      setTimeout(() => {
-        attack = viking.receiveDamage(saxon.strength);
-        this.addLogMessage('vikings', attack);
-        this.addRedBg(viking.name, game.timeout);
-        this.updateHealth(viking.name, viking.health);
-
-        if (viking.health <= 0) {
-          this.showKilledMsg(viking.name);
-
-          setTimeout(() => {
-            let index = this.vikingArmy.findIndex(
-              (elem) => elem.name === viking.name
-            );
-            this.vikingArmy.splice(index, 1);
-            this.removeSoldierDOM(viking.name);
-            // this.getStatus();
-            if (!this.getStatus()) game.gameOver();
-          }, game.timeout);
-        }
+      if (this.getStatus()) {
+        viking = this.randomVikingSoldier();
+        saxon = this.randomSaxonSoldier();
+        this.highlightSoldierInDOM(saxon.id, game.timeout);
+        this.addLogMessage('saxons', `Saxon soldier attacked ${viking.name}`);
 
         setTimeout(() => {
-          game.btnAttack.disabled = false;
-        }, game.timeout);
-      }, game.timeout);
-    }, game.timeout * 2);
+          attack = viking.receiveDamage(saxon.strength);
+          this.addLogMessage('vikings', attack);
+          this.addRedBg(viking.name, game.timeout);
+          this.updateHealth(viking.name, viking.health);
 
+          if (viking.health <= 0) {
+            this.showKilledMsg(viking.name);
+
+            setTimeout(() => {
+              let index = this.vikingArmy.findIndex(
+                (elem) => elem.name === viking.name
+              );
+              this.vikingArmy.splice(index, 1);
+              this.removeSoldierDOM(viking.name);
+              // this.getStatus();
+              if (!this.getStatus()) game.gameOver();
+            }, game.timeout);
+          }
+
+          setTimeout(() => {
+            game.btnAttack.disabled = false;
+          }, game.timeout);
+        }, game.timeout);
+      }
+    }, game.timeout * 2);
     return true;
   }
 

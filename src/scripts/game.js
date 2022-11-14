@@ -1,7 +1,7 @@
 class Game {
   constructor() {
     this.armySize = 5;
-    this.timeout = 1000;
+    this.timeout = 500;
     this.maxDamage = 50;
     this.minDamage = 20;
     this.war = new War();
