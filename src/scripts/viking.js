@@ -56,12 +56,12 @@ class War {
 
   addViking(theViking) {
     this.vikingArmy.push(theViking);
-    return theViking;
+    // return theViking;
   }
 
   addSaxon(theSaxon) {
     this.saxonArmy.push(theSaxon);
-    return theSaxon;
+    // return theSaxon;
   }
 
   addVikingToDOM(vikingSoldier, index) {
@@ -102,6 +102,8 @@ class War {
     const viking = this.vikingArmy[vikingIndex];
 
     let attack = '';
+
+
 
     if (theArmy === 'saxon') {
       this.selectSoldier(saxon.id);

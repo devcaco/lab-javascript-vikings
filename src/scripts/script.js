@@ -23,24 +23,22 @@ window.addEventListener('load', () => {
     const armySize = 5;
 
     for (let i = 0; i < armySize; i++) {
-      let viking = war.addViking(
-        new Viking(
-          `Viking-${i + 1}`,
-          100,
-          Math.floor(Math.random() * (50 - 20) + 20) + 1
-          //   100
-        )
+      let viking = new Viking(
+        `Viking-${i + 1}`,
+        100,
+        Math.floor(Math.random() * (50 - 20) + 20) + 1
+        //   100
       );
+      war.addViking(viking);
       war.addVikingToDOM(viking, i + 1);
 
-      let saxon = war.addSaxon(
-        new Saxon(
-          100,
-          Math.floor(Math.random() * (50 - 20) + 20) + 1,
-          //   100,
-          `saxon-${i + 1}`
-        )
+      let saxon = new Saxon(
+        100,
+        Math.floor(Math.random() * (50 - 20) + 20) + 1,
+        //   100,
+        `saxon-${i + 1}`
       );
+      war.addSaxon(saxon);
       war.addSaxonToDOM(saxon, i + 1);
     }
   });
@@ -54,14 +52,11 @@ window.addEventListener('load', () => {
 
     setTimeout(() => {
       if (war.getStatus()) war.attack('saxon');
-      else {
-        finished = true;
-        gameOver();
-      }
+      else finished = gameOver();
     }, 3000);
 
     setTimeout(() => {
-      if (!finished && !war.getStatus()) return gameOver();
+      if (!finished && !war.getStatus()) finished = gameOver();
       btnAttack.disabled = false;
     }, 6000);
   });
@@ -77,6 +72,6 @@ window.addEventListener('load', () => {
     btnAttack.style.display = 'none';
     btnAttack.disabled = false;
     btnStart.innerHTML = 'NEW GAME';
-    return false;
+    return true;
   }
 });
