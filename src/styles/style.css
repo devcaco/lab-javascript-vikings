@@ -134,3 +134,14 @@ button {
     margin-top: 15px;
     color: rgb(250, 121, 0);
 }
+.game-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: .8rem;
+    
+    /* margin-top: 20px; */
+    margin: 20px;
+    border-top: 1px solid #000;
+    padding-top: 5px;
+    box-sizing: border-box;
+}

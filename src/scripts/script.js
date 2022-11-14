@@ -48,15 +48,20 @@ window.addEventListener('load', () => {
   btnAttack.addEventListener('click', () => {
     btnAttack.disabled = true;
     displayBoard.innerHTML = '';
+    let finished = false;
 
     const vikingAttack = war.attack('viking');
 
     setTimeout(() => {
       if (war.getStatus()) war.attack('saxon');
+      else {
+        finished = true;
+        gameOver();
+      }
     }, 3000);
 
     setTimeout(() => {
-      if (!war.getStatus()) return gameOver();
+      if (!finished && !war.getStatus()) return gameOver();
       btnAttack.disabled = false;
     }, 6000);
   });
