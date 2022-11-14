@@ -42,6 +42,7 @@ body {
 .saxon-soldier,
 .viking-soldier {
   border: solid 1px #000;
+  box-sizing: border-box;
   /* padding: 10px; */
   margin: 10px 0;
   height: 80px;

@@ -95,81 +95,104 @@ class War {
     document.querySelector('.saxon-army').insertAdjacentHTML('beforeend', html);
   }
 
-  attack(theArmy) {
-    const saxonIndex = Math.floor(Math.random() * this.saxonArmy.length);
-    const vikingIndex = Math.floor(Math.random() * this.vikingArmy.length);
-    const saxon = this.saxonArmy[saxonIndex];
-    const viking = this.vikingArmy[vikingIndex];
+  randomSaxonSoldier() {
+    return this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
+  }
 
+  randomVikingSoldier() {
+    return this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
+  }
+
+  attack(game) {
     let attack = '';
+    let viking = '';
+    let saxon = '';
+    game.displayBoard.innerHTML = '';
+    game.btnAttack.disabled = true;
 
+    //VIKING'S ATTACK
+    viking = this.randomVikingSoldier();
+    saxon = this.randomSaxonSoldier();
 
+    this.highlightSoldierInDOM(viking.name, game.timeout);
+    this.addLogMessage('vikings', `${viking.name} attacked a Saxon Soldier`);
 
-    if (theArmy === 'saxon') {
-      this.selectSoldier(saxon.id);
+    setTimeout(() => {
+      attack = saxon.receiveDamage(viking.strength);
+      this.addLogMessage('saxons', attack);
+      this.addRedBg(saxon.id, game.timeout);
+      this.updateHealth(saxon.id, saxon.health);
+
+      if (saxon.health <= 0) {
+        this.showKilledMsg(saxon.id);
+        setTimeout(() => {
+          let index = this.saxonArmy.findIndex((elem) => elem.id === saxon.id);
+          this.saxonArmy.splice(index, 1);
+          this.removeSoldierDOM(saxon.id);
+          // this.getStatus();
+          if (!this.getStatus()) game.gameOver();
+        }, game.timeout - 20);
+      }
+    }, game.timeout);
+
+    //SAXON'S ATTACK
+    setTimeout(() => {
+      viking = this.randomVikingSoldier();
+      saxon = this.randomSaxonSoldier();
+      this.highlightSoldierInDOM(saxon.id, game.timeout);
       this.addLogMessage('saxons', `Saxon soldier attacked ${viking.name}`);
+
       setTimeout(() => {
         attack = viking.receiveDamage(saxon.strength);
         this.addLogMessage('vikings', attack);
-        this.addRedBg(viking.name);
+        this.addRedBg(viking.name, game.timeout);
         this.updateHealth(viking.name, viking.health);
 
         if (viking.health <= 0) {
           this.showKilledMsg(viking.name);
 
           setTimeout(() => {
-            this.vikingArmy.splice(vikingIndex, 1);
+            let index = this.vikingArmy.findIndex(
+              (elem) => elem.name === viking.name
+            );
+            this.vikingArmy.splice(index, 1);
             this.removeSoldierDOM(viking.name);
             // this.getStatus();
-          }, 1000);
+            if (!this.getStatus()) game.gameOver();
+          }, game.timeout);
         }
-      }, 1500);
-    } else if (theArmy === 'viking') {
-      this.selectSoldier(viking.name);
-      this.addLogMessage('vikings', `${viking.name} attacked a Saxon Soldier`);
 
-      setTimeout(() => {
-        attack = saxon.receiveDamage(viking.strength);
-        this.addLogMessage('saxons', attack);
-        this.addRedBg(saxon.id);
-        this.updateHealth(saxon.id, saxon.health);
-        if (saxon.health <= 0) {
-          this.showKilledMsg(saxon.id);
-          setTimeout(() => {
-            this.saxonArmy.splice(saxonIndex, 1);
-            this.removeSoldierDOM(saxon.id);
-            // this.getStatus();
-          }, 1000);
-        }
-      }, 1500);
-    } else {
-      attack = 'unknown army. try again';
-    }
+        setTimeout(() => {
+          game.btnAttack.disabled = false;
+        }, game.timeout);
+      }, game.timeout);
+    }, game.timeout * 2);
 
-    return attack;
+    return true;
   }
+
   showKilledMsg(soldier) {
     let html = document.querySelector(`.${soldier}`);
     html.innerHTML = 'KILLED';
     html.classList.add('killed');
   }
 
-  selectSoldier(soldier) {
+  highlightSoldierInDOM(soldier, timeout) {
     let html = document.querySelector(`.${soldier}`);
     html.classList.add('attack-soldier');
 
     setTimeout(() => {
       html.classList.remove('attack-soldier');
-    }, 1500);
+    }, timeout);
   }
 
-  addRedBg(soldier) {
+  addRedBg(soldier, timeout) {
     let html = document.querySelector(`.${soldier}`);
     html.classList.add('red-bg');
 
     setTimeout(() => {
       html.classList.remove('red-bg');
-    }, 1500);
+    }, timeout);
   }
 
   removeSoldierDOM(soldier) {
@@ -221,6 +244,9 @@ class War {
     if (this.vikingArmy.length && this.saxonArmy.length)
       return `Vikings and Saxons are still in the thick of battle.`;
   }
+
+  //OLD METHODS - REQUIRED TO PASS JASMINE TESTS
+
   vikingAttack() {
     const saxonIndex = Math.floor(Math.random() * this.saxonArmy.length);
     const vikingIndex = Math.floor(Math.random() * this.vikingArmy.length);
