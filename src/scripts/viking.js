@@ -105,26 +105,30 @@ class War {
 
     if (theArmy === 'saxon') {
       this.selectSoldier(saxon.id);
-
+      this.addLogMessage('saxons', `Saxon soldier attacked ${viking.name}`);
       setTimeout(() => {
         attack = viking.receiveDamage(saxon.strength);
+        this.addLogMessage('vikings', attack);
         this.addRedBg(viking.name);
         this.updateHealth(viking.name, viking.health);
 
         if (viking.health <= 0) {
           this.showKilledMsg(viking.name);
-          
+
           setTimeout(() => {
             this.vikingArmy.splice(vikingIndex, 1);
             this.removeSoldierDOM(viking.name);
+            // this.getStatus();
           }, 1000);
         }
       }, 1500);
     } else if (theArmy === 'viking') {
       this.selectSoldier(viking.name);
+      this.addLogMessage('vikings', `${viking.name} attacked a Saxon Soldier`);
 
       setTimeout(() => {
         attack = saxon.receiveDamage(viking.strength);
+        this.addLogMessage('saxons', attack);
         this.addRedBg(saxon.id);
         this.updateHealth(saxon.id, saxon.health);
         if (saxon.health <= 0) {
@@ -132,6 +136,7 @@ class War {
           setTimeout(() => {
             this.saxonArmy.splice(saxonIndex, 1);
             this.removeSoldierDOM(saxon.id);
+            // this.getStatus();
           }, 1000);
         }
       }, 1500);
@@ -170,6 +175,16 @@ class War {
     html.remove();
   }
 
+  addLogMessage(army, message) {
+    let html = document.querySelector(`.${army}-log`);
+
+    let content = `<div class="${
+      message.indexOf('died') !== -1 ? 'red' : ''
+    }">${message}</div>`;
+
+    html.insertAdjacentHTML('afterbegin', content);
+  }
+
   updateHealth(soldier, soldierHealth) {
     let healthBar = document.querySelector(`.${soldier} .soldier-health-bar`);
     let healthLabel = document.querySelector(`.${soldier} .soldier-health`);
@@ -180,6 +195,20 @@ class War {
     healthBar.style.background = barColor;
     healthBar.style.width = soldierHealth + '%';
     healthLabel.innerHTML = `${soldierHealth}%`;
+  }
+
+  reset() {
+    this.vikingArmy = [];
+    this.saxonArmy = [];
+    document.querySelector(`.viking-army`).innerHTML = '';
+    document.querySelector(`.saxon-army`).innerHTML = '';
+    document.querySelector(`.vikings-log`).innerHTML = '';
+    document.querySelector(`.saxons-log`).innerHTML = '';
+  }
+
+  getStatus() {
+    if (!this.vikingArmy.length || !this.saxonArmy.length) return false;
+    return true;
   }
 
   showStatus() {

@@ -15,14 +15,30 @@ body {
   /* justify-content: space-around; */
   font-family: Arial, Helvetica, sans-serif;
 }
+.game-header {
+  height: 120px;
+  color: #19086a;
+}
 
+.game-container {
+  border-top: 1px solid #000;
+  padding-top: 50px;
+}
 .center-content {
   display: flex;
   justify-content: space-around;
   align-items: center;
   align-content: center;
 }
-
+.game-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 40vw;
+  height: 500px;
+  /* background-color: red; */
+}
 .saxon-soldier,
 .viking-soldier {
   border: solid 1px #000;
@@ -32,6 +48,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+button {
+  height: 50px;
+  width: 150px;
+  font-size: 20px;
+  text-transform: uppercase;
 }
 
 .viking-army,
@@ -61,14 +84,53 @@ body {
 }
 
 .attack-soldier {
-    border: 5px solid rgba(0, 0, 0, 0.5);
+  border: 5px solid rgba(0, 0, 0, 0.5);
 }
 
 .killed {
-    background-color: red;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  color: white;
+}
+
+.game-log {
+  border: 1px solid #000;
+  min-height: 100px;
+  max-height: 200px;
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.8rem;
+  overflow: auto;
+}
+.log-title {
+  margin-bottom: 20px;
+}
+.game-footer {
+  height: 50px;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
+}
+
+.display-board-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 25px;
-    color: white;
+    color: rgb(1, 63, 40);
+}
+.display-board-container h3 {
+    text-align: center;
+    margin-top: 15px;
+    color: rgb(250, 121, 0);
 }

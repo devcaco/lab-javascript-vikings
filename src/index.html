@@ -4,22 +4,47 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vikings - WAR</title>
+    <title>Vikings - KINGDOM</title>
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
-  <body class="center-content">
-    <div class="vikings-side">
-      <h1>Viking Army</h1>
-      <div class="viking-army"></div>
+  <body>
+    <div class="game-header center-content">
+      <h1>VIKING'S KINGDOM</h1>
     </div>
-    <div class="game-controls">
-      <button class="btn-start">Start Game</button>
-      <button class="btn-attack" hidden>Attack</button>
+    <div class="game-container center-content">
+      <div class="vikings-side">
+        <h1>Viking Army</h1>
+        <div class="viking-army"></div>
+      </div>
+      <div class="game-controls">
+        <div class="display-board-container">
+          <h2 class="display-board"></h2>
+        </div>
+        <div class="game-buttons">
+          <button class="btn-start">Start Game</button>
+          <button class="btn-attack" hidden>Attack</button>
+        </div>
+        <div class="game-extra"></div>
+      </div>
+      <div class="saxons-side">
+        <h1>Saxon Army</h1>
+        <div class="saxon-army"></div>
+      </div>
     </div>
-    <div class="saxons-side">
-      <h1>Saxon Army</h1>
-      <div class="saxon-army"></div>
+    <div class="game-log-container" hidden>
+      <div class="log-title center-content">
+        <h2>BATTLE LOG</h2>
+      </div>
+      <div class="game-log">
+        <section class="vikings-log">
+          <!-- <div>Vikin-1 attacks Saxon Soldier Causing 20 of Damage</div> -->
+        </section>
+        <section class="saxons-log">
+          <!-- <div>Saxon soldier attacks Viking-2 causing 20 of Damage</div> -->
+        </section>
+      </div>
     </div>
+    <div class="game-footer"></div>
 
     <script src="./scripts/viking.js"></script>
     <script src="./scripts/script.js"></script>
