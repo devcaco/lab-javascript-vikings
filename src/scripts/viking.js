@@ -120,7 +120,7 @@ class War {
     setTimeout(() => {
       attack = saxon.receiveDamage(viking.strength);
       this.addLogMessage('saxons', attack);
-      this.addRedBg(saxon.id, game.timeout);
+      this.flashRedBg(saxon.id, game.timeout);
       this.updateHealth(saxon.id, saxon.health);
 
       if (saxon.health <= 0) {
@@ -146,7 +146,7 @@ class War {
         setTimeout(() => {
           attack = viking.receiveDamage(saxon.strength);
           this.addLogMessage('vikings', attack);
-          this.addRedBg(viking.name, game.timeout);
+          this.flashRedBg(viking.name, game.timeout);
           this.updateHealth(viking.name, viking.health);
 
           if (viking.health <= 0) {
@@ -187,7 +187,7 @@ class War {
     }, timeout);
   }
 
-  addRedBg(soldier, timeout) {
+  flashRedBg(soldier, timeout) {
     let html = document.querySelector(`.${soldier}`);
     html.classList.add('red-bg');
 
@@ -205,7 +205,7 @@ class War {
     let html = document.querySelector(`.${army}-log`);
 
     let content = `<div class="${
-      message.indexOf('died') !== -1 ? 'red' : ''
+      message.indexOf('died') !== -1 ? 'red-msg-log' : ''
     }">${message}</div>`;
 
     html.insertAdjacentHTML('afterbegin', content);
@@ -221,15 +221,6 @@ class War {
     healthBar.style.background = barColor;
     healthBar.style.width = soldierHealth + '%';
     healthLabel.innerHTML = `${soldierHealth}%`;
-  }
-
-  reset() {
-    this.vikingArmy = [];
-    this.saxonArmy = [];
-    document.querySelector(`.viking-army`).innerHTML = '';
-    document.querySelector(`.saxon-army`).innerHTML = '';
-    document.querySelector(`.vikings-log`).innerHTML = '';
-    document.querySelector(`.saxons-log`).innerHTML = '';
   }
 
   getStatus() {
