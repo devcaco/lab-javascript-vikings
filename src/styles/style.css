@@ -61,7 +61,7 @@ button {
 
 .viking-army,
 .saxon-army {
-  height: 500px;
+  min-height: 500px;
 }
 
 .soldier-info {
@@ -146,5 +146,5 @@ footer {
   margin: 20px;
   border-top: 1px solid #000;
   padding-top: 5px;
-  box-sizing: border-box;
+  padding-bottom: 20px;
 }
